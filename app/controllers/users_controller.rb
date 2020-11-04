@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user, only: [:show, :edit, :destroy]
 
   def new
     @user = User.new
@@ -7,7 +8,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    if @user.save 
+    if @user.save
       redirect_to blogs_path, notice: "アカウントを作成しました"
     else
       render :new
@@ -19,17 +20,20 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(current_user.id) 
+    @user = User.find(current_user.id)
   end
 
   def update
     @user = User.find(params[:id])
 
     if@user.update(user_params)
-      redirect_to user_path(current_user.id), notice: "プロフィール更新しました!" 
+      redirect_to user_path(current_user.id), notice: "プロフィール更新しました!"
     else
-      redirect_to edit_user_path(current_user.id), notice: "プロフィールに失敗" 
+      redirect_to edit_user_path(current_user.id), notice: "プロフィールに失敗"
     end
+  end
+
+  def destroy
   end
 
   private
@@ -38,4 +42,3 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 end
-
