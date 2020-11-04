@@ -6,6 +6,7 @@
   </p>
 </div>
 <div class="operation_box">
-  <%= link_to 'プロフィール編集へ', edit_user_path(@user) %> 
+  <%= link_to 'プロフィール編集へ', edit_user_path(@user) %>
   <%= link_to '戻る', blogs_path %>
+  <%= link_to 'ユーザー削除', user_path(@user), method: :delete, data: { confirm: 'Are you sure?' } %>
 </div>
